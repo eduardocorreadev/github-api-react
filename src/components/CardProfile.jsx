@@ -30,7 +30,6 @@ export default function CardProfile({ user }) {
               <span>{user.public_repos} <span>repositórios</span></span>
             </li>
           </ul>
-
         </div>
       </div>
     </div>

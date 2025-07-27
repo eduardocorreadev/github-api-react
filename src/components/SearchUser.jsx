@@ -3,10 +3,17 @@ import { getGithubUser } from "../services/githubService";
 
 export default function SearchUser({ getData }) {
     const [input, setInput] = useState("");
+    const [error, setError] = useState(false);
 
     async function handleSubmit(input) {
         const res = await getGithubUser(input);
-        getData(res);
+
+        if (res.status != "404") {
+            getData(res);
+        } else {
+            setError(true);
+        }
+
     }
 
     return (
@@ -16,6 +23,14 @@ export default function SearchUser({ getData }) {
                 <input type="text" placeholder="@username in github" value={input} onChange={(e) => setInput(e.target.value)} />
                 <button onClick={() => handleSubmit(input)}>Procurar</button>
             </div>
+
+            {
+                error && (
+                    <div className="error-message">
+                        <span>A conta não existe ou foi removida.</span>
+                    </div>
+                )
+            }
         </div>
     );
 }
